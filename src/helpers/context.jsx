@@ -1,17 +1,16 @@
-import { createContext, useEffect, useReducer } from "react";
+import { createContext, useEffect, useReducer, useContext } from "react";
 import {
   API_ENDPOINT,
   HANDLE_LIST,
   HANDLE_SUBMIT,
   MARK_COMPLETE,
   SET_LOADING,
-  SET_TASKS,
 } from "./actions";
 import reducer from "./reducer";
 
 const initialState = {
   isLoading: true,
-  task: "",
+  tasks: "",
 };
 
 const AppContext = createContext();
@@ -26,9 +25,10 @@ const AppProvider = ({ children }) => {
       const result = await response.json();
       console.log(url);
       console.log(result);
+      console.log(result[0].taskName);
       dispatch({
-        type: SET_TASKS,
-        payload: { task: result.taskName },
+        type: HANDLE_LIST,
+        payload: { tasks: result },
       });
     } catch (error) {
       console.log(error);
@@ -39,16 +39,37 @@ const AppProvider = ({ children }) => {
     dispatch({ type: MARK_COMPLETE, payload: id });
   };
 
-  const handleForm = (task) => {
-    dispatch({ type: HANDLE_SUBMIT, payload: task });
+  const handleForm = async (task) => {
+    console.log(task);
+    const data = { taskName: task };
+
+    try {
+      const postResponse = await fetch(API_ENDPOINT, {
+        method: "POST",
+        body: JSON.stringify(data),
+        headers: {
+          "Content-Type": "application/json",
+        },
+      });
+
+      if (!response.ok) {
+        throw new Error(`Error: ${response.status}`);
+      }
+      const result = await postResponse.json();
+      console.log(result);
+    } catch (error) {
+      console.error("Error : ", error);
+    }
+
+    dispatch({ type: HANDLE_SUBMIT, payload: postResponse.data });
   };
 
-  const handleList = (value) => {
-    dispatch({ type: HANDLE_LIST, payload: value });
+  const handleList = (tasks) => {
+    dispatch({ type: HANDLE_LIST, payload: tasks });
   };
-
+  //9cc0722a-2531-41aa-9eaa-08dc4846405e
   useEffect(() => {
-    fetchTasks(`${API_ENDPOINT}9cc0722a-2531-41aa-9eaa-08dc4846405e`);
+    fetchTasks(`${API_ENDPOINT}`);
   }, []);
 
   return (

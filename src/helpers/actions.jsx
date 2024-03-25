@@ -1,5 +1,4 @@
 export const SET_LOADING = "SET_LOADING";
-export const SET_TASKS = "SET_TASKS";
 export const HANDLE_SUBMIT = "HANDLE_SUBMIT";
 export const MARK_COMPLETE = "MARK_COMPLETE";
 export const HANDLE_LIST = "HANDLE_LIST";

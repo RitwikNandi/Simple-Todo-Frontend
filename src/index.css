@@ -66,16 +66,29 @@ ul li ::before {
   height: 28px;
   width: 28px;
   border-radius: 50%;
-  background-image: url(assets/unchecked.png);
+  background-image: url(https://img.icons8.com/plasticine/100/unchecked-checkbox.png);
   background-size: cover;
   background-position: center;
   top: 12px;
   left: 8px;
 }
-ul li.checked {
-  color: #555;
-  text-decoration: line-through;
+
+.loading {
+  width: 6rem;
+  height: 6rem;
+  margin: 0 auto;
+  margin-top: 10rem;
+  border-radius: 50%;
+  border: 3px solid #ccc;
+  border-top-color: var(--clr-primary-5);
+  animation: spinner 0.6s linear infinite;
 }
-ul li.checked ::before {
-  background-image: url(assets/checked.png);
+
+img {
+  width: 20px;
+  height: 20px;
+  margin-right: 10px;
+}
+
+.checked {
 }
